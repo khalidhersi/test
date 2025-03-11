@@ -1,0 +1,42 @@
+{
+  "rules": {
+    ".read": "auth != null",
+    ".write": "auth != null",
+    "users": {
+      ".indexOn": ["email", "role", "createdAt"],
+      "$uid": {
+        ".read": "auth != null && auth.uid == $uid",
+        ".write": "auth != null && auth.uid == $uid"
+      }
+    },
+    "jobs": {
+      ".indexOn": ["company", "location", "type", "remote", "postedBy", "createdAt"],
+      "$jobId": {
+        ".read": true,
+        ".write": "auth != null && (root.child('users').child(auth.uid).child('role').val() == 'employer' || root.child('users').child(auth.uid).child('role').val() == 'admin')"
+      }
+    },
+    "applications": {
+      ".indexOn": ["userId", "jobId", "status", "createdAt"],
+      "$appId": {
+        ".read": "auth != null && (data.child('userId').val() == auth.uid || root.child('jobs').child(data.child('jobId').val()).child('postedBy').val() == auth.uid)",
+        ".write": "auth != null && (data.child('userId').val() == auth.uid || root.child('jobs').child(data.child('jobId').val()).child('postedBy').val() == auth.uid)"
+      }
+    },
+    "profiles": {
+      ".indexOn": ["userId", "updatedAt"],
+      "$profileId": {
+        ".read": "auth != null",
+        ".write": "auth != null && auth.uid == data.child('userId').val()"
+      }
+    },
+    "companies": {
+      ".indexOn": ["ownerId", "name", "industry"],
+      "$companyId": {
+        ".read": true,
+        ".write": "auth != null && data.child('ownerId').val() == auth.uid"
+      }
+    }
+  }
+}
+

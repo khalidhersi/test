@@ -1,0 +1,300 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Base colors matching our wave animation palette */
+    --background: 0 0% 100%;
+    --foreground: 222 47% 11%;
+
+    /* Card colors with transparency for background interaction */
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+
+    /* Popover colors */
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    /* Primary: Blue (#3B82F6) */
+    --primary: 217 91% 60%;
+    --primary-foreground: 210 40% 98%;
+
+    /* Secondary: Cyan (#06B6D4) */
+    --secondary: 189 94% 43%;
+    --secondary-foreground: 210 40% 98%;
+
+    /* Accent: Purple (#8B5CF6) */
+    --accent: 262 83% 66%;
+    --accent-foreground: 210 40% 98%;
+
+    /* Muted with slight transparency */
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    /* Destructive */
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    /* Border and input with subtle glow */
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 217 91% 60%;
+
+    --radius: 1rem;
+
+    /* Add dashboard title color - deep indigo for light mode */
+    --dashboard: 234 89% 35%;
+  }
+
+  .dark {
+    /* Dark mode colors with deeper saturation */
+    --background: 222 47% 11%;
+    --foreground: 210 40% 98%;
+
+    /* Card colors with transparency for background interaction */
+    --card: 222 47% 11%;
+    --card-foreground: 210 40% 98%;
+
+    /* Popover colors */
+    --popover: 222 47% 11%;
+    --popover-foreground: 210 40% 98%;
+
+    /* Primary: Brighter Blue (#3B82F6) */
+    --primary: 217 91% 60%;
+    --primary-foreground: 222 47% 11%;
+
+    /* Secondary: Vibrant Cyan (#06B6D4) */
+    --secondary: 189 94% 43%;
+    --secondary-foreground: 222 47% 11%;
+
+    /* Accent: Bright Purple (#8B5CF6) */
+    --accent: 262 83% 66%;
+    --accent-foreground: 222 47% 11%;
+
+    /* Muted with glow effect */
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    /* Destructive */
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    /* Border and input with enhanced glow */
+    --border: 217 33% 17%;
+    --input: 217 33% 17%;
+    --ring: 224 76% 48%;
+
+    /* Bright cyan-blue for dark mode */
+    --dashboard: 199 95% 74%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Enhanced glass effect */
+.glass {
+  @apply bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg;
+  backdrop-filter: blur(12px);
+}
+
+.dark .glass {
+  @apply bg-black/10 border-white/5;
+}
+
+/* Gradient backgrounds with animation */
+.gradient-bg {
+  @apply relative overflow-hidden;
+  background: linear-gradient(
+    45deg,
+    hsl(217, 91%, 60%) 0%,
+    hsl(189, 94%, 43%) 35%,
+    hsl(262, 83%, 66%) 70%,
+    hsl(217, 91%, 60%) 100%
+  );
+  background-size: 200% 200%;
+  animation: gradient 8s linear infinite;
+}
+
+.gradient-hover {
+  @apply relative overflow-hidden transition-colors duration-300;
+  background: linear-gradient(45deg, hsl(217, 91%, 60%) 0%, hsl(189, 94%, 43%) 50%, hsl(262, 83%, 66%) 100%);
+  background-size: 200% 200%;
+}
+
+.gradient-hover:hover {
+  background-position: 100% 100%;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Enhanced glow effects */
+.glow {
+  @apply relative;
+}
+
+.glow::before {
+  @apply absolute inset-0 opacity-0 transition-opacity duration-500;
+  content: "";
+  background: radial-gradient(circle at center, hsl(var(--primary)) 0%, transparent 70%);
+  filter: blur(20px);
+  z-index: -1;
+}
+
+.glow:hover::before {
+  @apply opacity-20;
+}
+
+.dark .glow:hover::before {
+  @apply opacity-40;
+}
+
+/* Card hover effects with parallax */
+.hover-card {
+  @apply transition-all duration-500 relative overflow-hidden;
+  transform-style: preserve-3d;
+}
+
+.hover-card::before {
+  @apply absolute inset-0 opacity-0 transition-opacity duration-300;
+  content: "";
+  background: linear-gradient(
+    45deg,
+    hsla(var(--primary), 0.1) 0%,
+    hsla(var(--secondary), 0.1) 50%,
+    hsla(var(--accent), 0.1) 100%
+  );
+}
+
+.hover-card:hover {
+  @apply -translate-y-1;
+}
+
+.hover-card:hover::before {
+  @apply opacity-100;
+}
+
+/* Modern scrollbar */
+::-webkit-scrollbar {
+  @apply w-2;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-primary/20 rounded-full hover:bg-primary/40 transition-colors;
+}
+
+/* Hero section effects */
+.hero-gradient {
+  @apply relative overflow-hidden;
+  background: linear-gradient(
+    135deg,
+    hsla(var(--primary), 0.1) 0%,
+    hsla(var(--secondary), 0.1) 50%,
+    hsla(var(--accent), 0.1) 100%
+  );
+}
+
+/* Float animation with easing */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-float {
+  animation: float 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* Smooth transitions class */
+.smooth-transition {
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Card backdrop blur */
+.card-blur {
+  @apply bg-background/60 backdrop-blur-lg border-white/10;
+}
+
+.dark .card-blur {
+  @apply bg-background/40 border-white/5;
+}
+
+/* Navigation blur effect */
+.nav-blur {
+  @apply bg-background/80 backdrop-blur-lg border-b border-border/50;
+}
+
+.dark .nav-blur {
+  @apply bg-background/40 border-border/30;
+}
+
+/* Text gradient effect */
+.text-gradient {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-primary via-secondary to-accent;
+  background-size: 200% auto;
+  animation: textGradient 8s linear infinite;
+}
+
+@keyframes textGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Button hover effects */
+.button-glow {
+  @apply relative overflow-hidden;
+}
+
+.button-glow::after {
+  @apply absolute inset-0 opacity-0 transition-opacity duration-300;
+  content: "";
+  background: linear-gradient(
+    45deg,
+    hsla(var(--primary), 0.3) 0%,
+    hsla(var(--secondary), 0.3) 50%,
+    hsla(var(--accent), 0.3) 100%
+  );
+  filter: blur(15px);
+}
+
+.button-glow:hover::after {
+  @apply opacity-100;
+}
+
+/* Add dashboard title styling */
+.text-dashboard {
+  color: hsl(var(--dashboard));
+}
+
