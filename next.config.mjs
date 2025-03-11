@@ -11,9 +11,6 @@ const nextConfig = {
     ],
     unoptimized: process.env.NODE_ENV !== 'production'
   },
-  experimental: {
-    serverActions: true,
-  },
   webpack: (config) => {
     config.externals = [...(config.externals || []), { canvas: 'canvas' }];
     return config;
